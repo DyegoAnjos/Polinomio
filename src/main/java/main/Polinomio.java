@@ -44,48 +44,37 @@ public class Polinomio implements IPolinomio{
 
     }
 
-    public void ordernar(){
-        No aux = head.prox;
-        No baseParaAgrupar = head.prox;
-        No anterior = head;
-        No troca = head;
-        String varBase = head.variavel;
-        while (aux != null){
+    public void ordenar() {
+        if (head == null || head.prox == null) return;
 
-            if (aux.variavel == varBase){
-                baseParaAgrupar = aux;
-                aux = aux.prox;
-            }
-            else{
-                while (aux != null){
-                    if (aux.variavel != varBase){
-                        anterior = aux;
-                        if(aux.prox != null)
-                            aux = aux.prox;
-                    }
-                    else{
-                        System.out.println("aux: "+aux.variavel + aux.exp);
-                        anterior.prox = aux.prox;
+        No HeadListaOrdenada = null;
+        No atual = head;
 
-                        System.out.println("baseParaAgrupar: "+baseParaAgrupar.variavel + baseParaAgrupar.exp);
-                        System.out.println("head.prox: "+head.prox.variavel + head.prox.exp);
-                        baseParaAgrupar = baseParaAgrupar.prox;
-                        troca = baseParaAgrupar.prox;
-                        aux.prox=troca;
+        while (atual != null) {
+            No proximoNoOriginal = atual.prox;
 
-                        aux = troca.prox;
-
-
-
-                    }
+            if (HeadListaOrdenada == null || atual.variavel.compareTo(HeadListaOrdenada.variavel) < 0) {
+                atual.prox = HeadListaOrdenada;
+                HeadListaOrdenada = atual;
+            } else {
+                No busca = HeadListaOrdenada;
+                while (busca.prox != null && busca.prox.variavel.compareTo(atual.variavel) < 0) {
+                    busca = busca.prox;
                 }
-                    tail = aux;
-                    varBase = baseParaAgrupar.prox.variavel;
-                    aux = baseParaAgrupar.prox;
-
+                atual.prox = busca.prox;
+                busca.prox = atual;
             }
-            System.out.println(this);
+
+            atual = proximoNoOriginal;
         }
+
+        head = HeadListaOrdenada;
+
+        No auxTail = head;
+        while (auxTail.prox != null) {
+            auxTail = auxTail.prox;
+        }
+        tail = auxTail;
     }
 
     @Override
@@ -97,7 +86,7 @@ public class Polinomio implements IPolinomio{
             aux=aux.prox;
         }
 
-
+        System.out.println(" Tail:" + tail.c + tail.variavel + tail.exp);
         return retorno;
     }
 }
