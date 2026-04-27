@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Polinomio poli = new Polinomio();
+        Polinomio poli = new Polinomio(sc);
 
         while (true) {
             System.out.println("Polinômio: ");
@@ -36,7 +36,7 @@ public class Main {
             if (!erro) {
                 poli.ordenar();
                 System.out.println("Polinômio: " + poli.toString());
-                double resultado = poli.calc(sc);
+                double resultado = poli.calc();
                 System.out.printf("Valor: %.4f\n", resultado);
             }
         }
