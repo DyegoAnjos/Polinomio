@@ -6,7 +6,11 @@ public class Polinomio implements IPolinomio{
     private No head;
     private No tail;
     private int qtdItens = 0;
+    private Scanner sc;
 
+    public Polinomio(Scanner sc){
+        this.sc = sc;
+    }
 
     private class No{
         public double c;
@@ -40,9 +44,8 @@ public class Polinomio implements IPolinomio{
     }
 
     @Override
-    public double calc(Scanner sc) {
+    public double calc() {
         if (head == null) return 0;
-
        //LSE auxiliar
         No atual = head;
         double resultado = 0;
