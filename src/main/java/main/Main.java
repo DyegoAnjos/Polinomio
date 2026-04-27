@@ -1,22 +1,47 @@
 package main;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Polinomio poli = new Polinomio();
 
-        poli.add(1,"c",2);
-        poli.add(1,"c",5);
-        poli.add(1,"e",2);
-        poli.add(1,"f",2);
-        poli.add(1,"c",0);
-        poli.add(1,"e",1);
-        poli.add(1,"c",4);
-        poli.add(1,"f",4);
-        System.out.println(poli.toString() + "\n");
+        while (true) {
+            System.out.println("Polinômio: ");
+            String input = sc.nextLine();
+            if (input.trim().isEmpty()) break;
 
-        poli.ordenar();
+            Scanner linhaLida = new Scanner(input);
+            int numParcelas = 1;
+            poli.clear();
+            boolean erro = false;
 
-        System.out.println(poli.toString());
+            while (linhaLida.hasNext()) {
+                try {
+                    double c = linhaLida.nextDouble();
+                    if (!linhaLida.hasNext()) throw new Exception();
+                    String var = linhaLida.next().toLowerCase();
+                    if (!linhaLida.hasNextInt()) throw new Exception();
+                    int exp = linhaLida.nextInt();
+                    poli.add(c, var, exp);
+                    numParcelas++;
+                } catch (Exception e) {
+                    System.out.println("Erro na parcela " + numParcelas);
+                    erro = true;
+                    break;
+                }
+            }
+            linhaLida.close();
 
+            if (!erro) {
+                poli.ordenar();
+                System.out.println("Polinômio: " + poli.toString());
+                double resultado = poli.calc(sc);
+                System.out.printf("Valor: %.4f\n", resultado);
+            }
+        }
+        sc.close();
+        System.out.println("Programa encerrado.");
     }
 }
+
